@@ -37,7 +37,7 @@ const LoginModal = (props) => {
             {formGroup}
           </Modal.Body>
           <Modal.Footer>
-            <Button bsStyle="success" onClick={props.login}>Login</Button>
+            <Button bsStyle="success" onClick={props.onClick}>Login</Button>
             <Button bsStyle="danger" onClick={props.onHide}>Close</Button>
           </Modal.Footer>
         </Modal>
