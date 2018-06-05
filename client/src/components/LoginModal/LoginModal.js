@@ -4,32 +4,37 @@ import { Modal,Button,FormGroup,Form,FormControl,Col,ControlLabel, } from 'react
 import './LoginModal.css';
 
 const LoginModal = (props) => {
-    console.log("in modal"+ JSON.stringify(props));
+    let formGroup =null; 
+    if (props.show){
+    //console.log("in modal"+ JSON.stringify(props));
+    const formElementsArray = [];
+    for (let key in props.input) {
+        //console.log(key);
+        formElementsArray.push({
+            id: key,
+            prop: props.input[key]
+        });
+    }
+    //console.log(formElementsArray);
+    formGroup = (
+      <Form horizontal>
+        {formElementsArray.map(formElement => (
+            <CustomFormGroup 
+                key={formElement.id}
+                {...formElement.prop}
+                inputHandler={props.inputHandler}
+                />
+            ))}
+      </Form>
+    );
+    }
     return (
-        <Modal {...props}>
+        <Modal show={props.show} onHide={props.onHide} >
           <Modal.Header closeButton>
             <Modal.Title>User Login</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-          <Form horizontal>
-            <FormGroup controlId="formHorizontalEmail">
-              <Col componentClass={ControlLabel} sm={2}>
-                Email
-              </Col>
-              <Col sm={10}>
-                <FormControl type="email" placeholder="Email" />
-              </Col>
-            </FormGroup>
-
-            <FormGroup controlId="formHorizontalPassword">
-              <Col componentClass={ControlLabel} sm={2}>
-                Password
-              </Col>
-              <Col sm={10}>
-                <FormControl type="password" placeholder="Password" />
-              </Col>
-            </FormGroup>
-          </Form>
+            {formGroup}
           </Modal.Body>
           <Modal.Footer>
             <Button bsStyle="success" onClick={props.login}>Login</Button>
@@ -37,6 +42,20 @@ const LoginModal = (props) => {
           </Modal.Footer>
         </Modal>
     );
+};
+
+const CustomFormGroup = (props) => {
+  //console.log(props);
+  return(
+    <FormGroup controlId={props.controlId}>
+      <Col componentClass={ControlLabel} sm={2}>
+        {props.placeholder}
+      </Col>
+      <Col sm={10}>
+        <FormControl onChange={props.inputHandler} type={props.type} placeholder={props.placeholder} />
+      </Col>
+    </FormGroup>
+  );
 };
 
 export default LoginModal;
