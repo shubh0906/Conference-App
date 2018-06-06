@@ -31,7 +31,7 @@ const LoginModal = (props) => {
     return (
         <Modal show={props.show} onHide={props.onHide} >
           <Modal.Header closeButton>
-            <Modal.Title>User Login</Modal.Title>
+            <Modal.Title>{props.userType} Login</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             {formGroup}

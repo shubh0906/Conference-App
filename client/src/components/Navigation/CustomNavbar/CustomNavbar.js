@@ -1,34 +1,38 @@
-import React, { Component } from 'react'
-import { Navbar, Nav, NavItem,Button } from 'react-bootstrap';
+import React from 'react'
+import { Navbar, Nav, NavItem,NavDropdown,MenuItem } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 
 
 import './CustomNavbar.css';
 
 const CustomNavbar = (props) => {
+  console.log(JSON.stringify(props));
+  let navLogin =null;
+  if(!props.isAuthenticated){
+    navLogin=(<NavDropdown eventKey={2} title="Login" id="basic-nav-dropdown">
+                <MenuItem eventKey={"User"} onSelect={props.showModal}>User</MenuItem>
+                <MenuItem eventKey={"Admin"}onSelect={props.showModal}>Admin</MenuItem>
+              </NavDropdown>);
+  }
+  else{
+    navLogin=( <NavItem eventKey={1} componentClass={NavLink} href="/" to="/">
+                Logout
+              </NavItem>);
+  }
   return (
-    <Navbar default collapseOnSelect>
+    <Navbar default collapseOnSelect fixedTop>
       <Navbar.Header>
         <Navbar.Brand>
           <NavLink to="/">Conference 2018</NavLink>
         </Navbar.Brand>
         <Navbar.Toggle />
       </Navbar.Header>
-      <Navbar.Form pullLeft>
-          <Button
-              bsStyle="primary"
-              onClick={props.showModal}
-            >Login
-          </Button>
-        </Navbar.Form>
       <Navbar.Collapse>
         <Nav pullRight>
           <NavItem eventKey={1} componentClass={NavLink} href="/" to="/">
             Home
           </NavItem>
-          <NavItem eventKey={2} componentClass={NavLink} href="/admin" to="/admin">
-            Admin
-          </NavItem>
+          {navLogin}
         </Nav>
       </Navbar.Collapse>
     </Navbar>

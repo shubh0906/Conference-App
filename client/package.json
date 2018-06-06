@@ -2,9 +2,14 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "proxy":"http://localhost:3101",
+  "proxy": {
+    "/users/*": {
+      "target": "http://localhost:3101"
+    }
+  },
   "dependencies": {
     "axios": "^0.18.0",
+    "font-awesome": "^4.7.0",
     "react": "^16.4.0",
     "react-bootstrap": "^0.32.1",
     "react-dom": "^16.4.0",

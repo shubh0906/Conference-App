@@ -14,6 +14,14 @@ var app = express();
 const port = 3101;
 
 app.use(bodyParser.json());
+app.use(function(req, res, next) {
+  console.log("meeee"+req.body);
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Expose-Headers","Content-Length,X-AUTH,X-Bar");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept,x-auth");
+  next();
+});
+
 
 
 // POST /users
@@ -25,6 +33,7 @@ app.post('/users/create', (req, res) => {
   user.save().then(() => {
     return user.generateAuthToken();
   }).then((token) => {
+    
     res.header('x-auth', token).send(user);
   }).catch((e) => {
     res.status(400).send(e);
@@ -46,9 +55,11 @@ app.post('/users/anon',(req, res) => {
 });
 app.post('/users/login', (req, res) => {
   var body = _.pick(req.body, ['accountType','email', 'password']);
-
+  console.log(body);
   User.findByCredentials(body.email, body.password).then((user) => {
     return user.generateAuthToken().then((token) => {
+      res.header('x-auth', token);
+      console.log(res);
       res.header('x-auth', token).send(user);
     });
   }).catch((e) => {
@@ -368,7 +379,8 @@ app.put('/track/:id',authenticate, (req, res) => {
 //Get APIs
 
 //Get all tracks
-app.get('/tracks',authenticate, (req, res) => {
+app.get('/api/tracks',authenticate, (req, res) => {
+  console.log("hello0"+req);
   Tracks.find().then((track) => {
     res.send({track});
   }, (e) => {

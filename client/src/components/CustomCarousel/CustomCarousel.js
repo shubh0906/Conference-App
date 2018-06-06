@@ -9,22 +9,22 @@ const CustomCarousel = () => {
         <Carousel>
             <CarouselItem 
                 alt="900x500" 
-                src="/carousel.png"
+                src="assets/event-1.jpg"
                 label="First slide label"
                 description="Nulla vitae elit libero, a pharetra augue mollis interdum."/>
             <CarouselItem 
                 alt="900x500" 
-                src="/carousel.png"
+                src="assets/event-2.jpg"
                 label="Second slide label"
                 description="Nulla vitae elit libero, a pharetra augue mollis interdum." />
             <CarouselItem 
                 alt="900x500" 
-                src="/carousel.png"
+                src="assets/event-3.jpg"
                 label="Third slide label"
                 description="Nulla vitae elit libero, a pharetra augue mollis interdum." />
             <CarouselItem 
                 alt="900x500" 
-                src="/carousel.png"
+                src="assets/event-2.jpg"
                 label="Fourth slide label"
                 description="Nulla vitae elit libero, a pharetra augue mollis interdum." />
         </Carousel>

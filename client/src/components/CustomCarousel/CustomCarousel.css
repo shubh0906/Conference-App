@@ -1,3 +1,12 @@
 img{
-  height:300px;
+  max-width:100% ;
+  max-height: 100%;
+}
+.carousel{
+  margin-top:50px;
+  position: relative;
+  height: 300px;
+}
+.item {
+  height: 300px;
 }
