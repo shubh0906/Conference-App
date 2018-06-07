@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 import './CustomNavbar.css';
 
 const CustomNavbar = (props) => {
-  console.log(JSON.stringify(props));
+  //console.log(JSON.stringify(props));
   let navLogin =null;
   if(!props.isAuthenticated){
     navLogin=(<NavDropdown eventKey={2} title="Login" id="basic-nav-dropdown">

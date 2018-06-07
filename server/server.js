@@ -389,7 +389,7 @@ app.get('/api/tracks',authenticate, (req, res) => {
 })
 
 //Get a particular track with all events
-app.get('/tracks/:id', (req, res) => {
+app.get('/api/tracks/:id', (req, res) => {
   var id = req.params.id;
 
   if (!ObjectID.isValid(id)) {
