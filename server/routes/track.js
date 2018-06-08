@@ -7,7 +7,8 @@ const {Tracks} = require('../models/track');
 const {authenticate,authenticateAdmin} = require('../middleware/authenticate');
 
 module.exports = app => {
-    app.post('/track',authenticateAdmin, (req, res) => {
+    //add a new track
+    app.post('/api/track',authenticateAdmin, (req, res) => {
         const track = new Tracks({
           name: req.body.name,
           events: [],
@@ -20,9 +21,10 @@ module.exports = app => {
         }, (e) => {
           res.status(400).send(e);
         });
-      });
-      
-    app.delete('/track/:id',authenticateAdmin, (req, res) => {
+    });
+
+    // Delete a track  
+    app.delete('/api/track/:id',authenticateAdmin, (req, res) => {
       if (!ObjectID.isValid(req.params.id)) {
         return res.status(404).send();
       }
@@ -38,7 +40,8 @@ module.exports = app => {
       });
     });
       
-    app.put('/track/:id',authenticate, (req, res) => {
+    //patch a track
+    app.patch('/api/track/:id',authenticate, (req, res) => {
       var id = req.params.id;
     
       if (!ObjectID.isValid(id)) {
@@ -53,25 +56,14 @@ module.exports = app => {
           let oldName = track.name;
           let newName = req.body.name;
           track.name = newName;
+          track.shortDescription = req.body.shortDescription;
           console.log('oldName', oldName, 'newName', newName)
         
           track.save().then((trackDoc) => {
-            let query = {
-              'trackType': oldName
-            };
-            Events.findOneAndUpdate(query, 
-              { $set: { 'trackType': newName }
-            }).then((eventDoc) => {
-              let resBody = {
-                trackDetails: trackDoc,
-                eventDetails: eventDoc
-              }
-              res.send(resBody);
-            }, (e) => {
-              return res.status(400).send(e);
-            });
+            console.log("patch"+trackDoc);
+            res.send(trackDoc);
             
-          }, (e) => {
+          }).catch( (e) => {
             res.status(400).send(e);
           }); 
         }   
@@ -79,12 +71,10 @@ module.exports = app => {
         res.status(400).send();
       });
     });
+    
+    //Get APIs
       
-      //End of Track API Collection
-      
-      //Get APIs
-      
-      //Get all tracks
+    //Get all tracks
     app.get('/api/tracks',authenticate, (req, res) => {
       console.log("hello0"+req);
       Tracks.find().select('-events').then((track) => {
@@ -92,9 +82,9 @@ module.exports = app => {
       }, (e) => {
         res.status(400).send(e);
       });
-    })
+    });
       
-      //Get a particular track with all events
+    //Get a particular track with all events
     app.get('/api/tracks/:id',authenticate,  (req, res) => {
       var id = req.params.id;
     
