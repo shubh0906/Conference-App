@@ -53,14 +53,12 @@ module.exports = app => {
           return res.status(404).send();
         }
         if(req.body.name) {
-          let oldName = track.name;
-          let newName = req.body.name;
-          track.name = newName;
-          track.shortDescription = req.body.shortDescription;
-          console.log('oldName', oldName, 'newName', newName)
-        
+          if(track.name!==req.body.name)
+            track.name = req.body.name;
+          if(tracl.shortDescription!==req.body.shortDescription)
+            track.shortDescription = req.body.shortDescription;
           track.save().then((trackDoc) => {
-            console.log("patch"+trackDoc);
+            //console.log("patch"+trackDoc);
             res.send(trackDoc);
             
           }).catch( (e) => {
@@ -76,7 +74,6 @@ module.exports = app => {
       
     //Get all tracks
     app.get('/api/tracks',authenticate, (req, res) => {
-      console.log("hello0"+req);
       Tracks.find().select('-events').then((track) => {
         res.send({track});
       }, (e) => {

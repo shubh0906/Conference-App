@@ -11,7 +11,7 @@ module.exports = app =>{
     app.post('/users/create', (req, res) => {
         var body = _.pick(req.body, ['accountType','email', 'password','name','phone']);
         var user = new User(body);
-        console.log(body)
+        //console.log(body)
       
         user.save().then(() => {
           return user.generateAuthToken();
@@ -24,12 +24,10 @@ module.exports = app =>{
       });
       
       app.get('/users/me', authenticate, (req, res) => {
-        console.log("get");
         res.send(req.user);
       });
       
       app.post('/users/anon',(req, res) => {
-        console.log(req.body);
         var body = _.pick(req.body, ['accountType', 'password']);
         User.authenticateAnon(body.accountType, body.password).then((token) => {
           res.header('x-auth',token).send();
@@ -39,11 +37,11 @@ module.exports = app =>{
       });
       app.post('/users/login', (req, res) => {
         var body = _.pick(req.body, ['accountType','email', 'password']);
-        console.log(body);
+        //console.log(body);
         User.findByCredentials(body.email, body.password).then((user) => {
           return user.generateAuthToken().then((token) => {
             res.header('x-auth', token);
-            console.log(res);
+            //console.log(res);
             res.header('x-auth', token).send(user);
           });
         }).catch((e) => {

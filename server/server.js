@@ -17,7 +17,6 @@ const port = process.env.PORT;;
 
 app.use(bodyParser.json());
 app.use(function(req, res, next) {
-  console.log("meeee"+req.body);
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Expose-Headers","Content-Length,X-AUTH,X-Bar");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept,x-auth");
