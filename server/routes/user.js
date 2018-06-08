@@ -24,6 +24,7 @@ module.exports = app =>{
       });
       
       app.get('/users/me', authenticate, (req, res) => {
+        console.log("get");
         res.send(req.user);
       });
       

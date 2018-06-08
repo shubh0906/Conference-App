@@ -1,16 +1,25 @@
 var mongoose = require('mongoose');
 
-var roomInfo = mongoose.Schema({
+var roomInfo = new mongoose.Schema({
   name: String,
   attendanceLimit: Number
 });
 
-
-var Events = mongoose.model('Events', {
+var EventSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
     trim: true
+  },
+  shortDescription:{
+    type: String,
+    required: true,
+    minlength:50
+  },
+  longDescription:{
+    type: String,
+    required: true,
+    minlength:50
   },
   room: {
     type: roomInfo,
@@ -18,12 +27,12 @@ var Events = mongoose.model('Events', {
     trim: true,
   },
   startTime: {
-    type: String,
+    type: Date,
     required: true,
     trim: true,
   },
   endTime: {
-    type: String,
+    type: Date,
     required: true,
     trim: true,
   },
@@ -41,7 +50,12 @@ var Events = mongoose.model('Events', {
     type: String,
     required: true,
     trim: true
+  },
+  published :{
+    type : Boolean
   }
 });
 
-module.exports = {Events};
+var Events = mongoose.model('Events',EventSchema );
+
+module.exports = {Events,EventSchema};
