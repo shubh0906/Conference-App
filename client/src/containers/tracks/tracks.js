@@ -35,8 +35,6 @@ class Tracks extends Component {
         console.log("did");
     }
     handleSelect=(Key) => {
-        // console.log(Key);
-        // console.log(this.state);
         this.setState({key : Key} );
         
         axios.get('/api/tracks/'+Key,{headers: {'x-auth': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjE2ODY0NWE1NmNiODJkNGQzMGJjZmYiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTI4MjgwMjQwfQ.2tZCxVyB_gh4RuqaLcVpAHb6bjpR1GEkb3gE4sGqb_s'}})
@@ -84,7 +82,7 @@ class Tracks extends Component {
                 </Nav>
             );
             tabs =(
-                <Tab.Content animation>
+                <Tab.Content >
                     {
                         this.state.tracks.map(track =>(
                             <TabContent events ={this.state.events} key= {track["_id"]} eventkey={track["_id"]}/>
